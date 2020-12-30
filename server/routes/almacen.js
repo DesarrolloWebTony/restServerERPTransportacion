@@ -14,6 +14,29 @@ const app = express();
 //db.getCollection('almacens').find({ "cantStock" : {$lt: 100} })
 
 
+//Obtener un almacen
+
+app.get('/almacen/:id', function (req, res) {
+
+    let id = req.params.id;
+
+    Almacen.findById(id, (err, almacenDB) => {
+        if (err) {
+            return res.status(400).json({
+                ok: false,
+                err
+            });
+        };
+
+        res.json({
+            ok: true,
+            almacen: almacenDB
+        });
+
+    });
+
+});
+
 // Obtener todos
 app.get('/almacenes', function (req, res) {
 
@@ -157,7 +180,6 @@ app.put('/almacen/:id', function (req, res) {
     });
 
 });
-
 
 app.delete('/almacen/:id', function (req, res) {
 
