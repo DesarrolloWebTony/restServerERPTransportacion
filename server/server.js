@@ -28,6 +28,11 @@ app.use(bodyParser.json());
 // ===================================================
 
 app.use(require('./routes/almacen'));
+app.use(require('./routes/contenedor'));
+app.use(require('./routes/logistica'));
+app.use(require('./routes/devolucion'));
+app.use(require('./routes/distribucion'));
+
 
 // ===================================================
 //              MONGOOSE CONNECTION

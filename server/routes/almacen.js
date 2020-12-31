@@ -185,7 +185,10 @@ app.delete('/almacen/:id', function (req, res) {
 
     let id = req.params.id;
 
-    Almacen.findOneAndRemove(id, (err, usuarioBorrado) => {
+    //findOneAndRemove 
+    // No funcionaba porque este encuentra uno y lo elimina al parecer el primero
+    // se podia ocupar pero cambiando One por ById
+    Almacen.findByIdAndDelete(id, (err, usuarioBorrado) => {
         if (err) {
             return res.status(400).json({
                 ok: false,
