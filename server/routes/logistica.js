@@ -42,6 +42,74 @@ app.get('/logisticas', function (req, res) {
         });
 });
 
+// traslados
+app.get('/enRuta', function (req, res) {
+
+    Logistica.find({"fechaSalida":{$exists:true}})
+        .exec((err, rutas) => {
+            if (err) {
+                return res.status(400).json({
+                    ok: false,
+                    err
+                });
+            }
+
+            res.json({
+                ok: true,
+                rutas
+            });
+        });
+});
+
+// destinos solicitados
+app.get('/destinosSolicitados', function (req, res) {
+
+    Logistica.aggregate(
+        [
+        
+           {
+               $group:{
+                   _id:"$destino",
+                   numElem: {$sum:1}
+               }
+           }
+           
+        ]
+       ).exec((err, rutas) => {
+        if (err) {
+            return res.status(400).json({
+                ok: false,
+                err
+            });
+        }
+
+        res.json({
+            ok: true,
+            rutas
+        });
+    });  
+});
+
+// pedidos concluidos
+
+app.get('/pedidosHechos', function (req, res) {
+
+    Logistica.find({"entregado":true})
+        .exec((err, rutas) => {
+            if (err) {
+                return res.status(400).json({
+                    ok: false,
+                    err
+                });
+            }
+
+            res.json({
+                ok: true,
+                rutas
+            });
+        });
+});
+
 app.post('/logistica', function(req, res){
     let body = req.body;
 
@@ -52,7 +120,8 @@ app.post('/logistica', function(req, res){
         numArticulos: body.numArticulos,
         tiempoEstimado: body.tiempoEstimado,
         fechaSalida: body.fechaSalida,
-        destino: body.destino
+        destino: body.destino,
+        entregado: body.entregado
     });
 
     logistica.save((err, logisticaBD)=>{

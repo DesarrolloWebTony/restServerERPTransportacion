@@ -4,7 +4,12 @@ const uniqueValidator = require('mongoose-unique-validator');
 let tiposVehiculos = {
     values: ['moto','auto','camioneta','trailer'],
     message: '{VALUE} no es un rol valido'
-}
+};
+
+let destinos = {
+    values : ['Yucatan','CDMX','Mexico','Monterrey','Sinaloa','Veracruz'],
+    message: '{VALUE} no es un destino valido'
+};
 
 let Schema = mongoose.Schema;
 
@@ -33,11 +38,16 @@ let logisticaSchema = new Schema({
     },
     fechaSalida: {
         type: String,
-        required: [true, 'fecha de salida necesario']
+        // required: [true, 'fecha de salida necesario']
     },
     destino: {
         type: String,
+        enum: destinos,
         required:[true, 'el destino es necesario']
+    },
+    entregado:{
+        type: Boolean,
+        required: [true, 'especificar estado de entregado']
     }
 });
 
