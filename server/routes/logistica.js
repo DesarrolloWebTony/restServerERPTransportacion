@@ -3,6 +3,27 @@ const Logistica = require('../models/logistica');
 
 const app = express();
 
+app.get('/logistica/:id', function (req, res) {
+
+    let id = req.params.id;
+
+    Logistica.findById(id, (err, logisticaDB) => {
+        if (err) {
+            return res.status(400).json({
+                ok: false,
+                err
+            });
+        };
+
+        res.json({
+            ok: true,
+            logistica: logisticaDB
+        });
+
+    });
+
+});
+
 app.get('/logisticas', function (req, res) {
 
     Logistica.find()
@@ -45,6 +66,55 @@ app.post('/logistica', function(req, res){
             ok: true,
             logistica: logisticaBD
         });
+    });
+});
+
+app.put('/logistica/:id', function (req, res) {
+
+    let id = req.params.id;
+    let body = req.body;
+
+    Logistica.findByIdAndUpdate(id, body, {
+        new: true,
+        runValidators: true,
+        context: 'query'
+    }, (err, logisticaBD) => {
+        if (err) {
+            return res.status(400).json({
+                ok: false,
+                err
+            });
+        };
+
+        res.json({
+            ok: true,
+            logistica: logisticaBD
+        });
+
+    });
+
+});
+
+app.delete('/logistica/:id', function (req, res) {
+
+    let id = req.params.id;
+
+    //findOneAndRemove 
+    // No funcionaba porque este encuentra uno y lo elimina al parecer el primero
+    // se podia ocupar pero cambiando One por ById
+    Logistica.findByIdAndDelete(id, (err, logisticaBorrado) => {
+        if (err) {
+            return res.status(400).json({
+                ok: false,
+                err
+            });
+        };
+
+        res.json({
+            ok: true,
+            logistica: logisticaBorrado
+        });
+
     });
 });
 

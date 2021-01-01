@@ -3,6 +3,45 @@ const Distribucion = require('../models/distribucion');
 
 const app = express();
 
+app.get('/distribucion/:id', function (req, res) {
+
+    let id = req.params.id;
+
+    Distribucion.findById(id, (err, distribucionDB) => {
+        if (err) {
+            return res.status(400).json({
+                ok: false,
+                err
+            });
+        };
+
+        res.json({
+            ok: true,
+            distribucion: distribucionDB
+        });
+
+    });
+
+});
+
+app.get('/distribuciones', function (req, res) {
+
+    Distribucion.find()
+        .exec((err, distribucionesBD) => {
+            if (err) {
+                return res.status(400).json({
+                    ok: false,
+                    err
+                });
+            }
+
+            res.json({
+                ok: true,
+                distribucionesBD
+            });
+        });
+});
+
 app.post('/distribucion', function(req, res){
     
     let body = req.body;
@@ -30,6 +69,55 @@ app.post('/distribucion', function(req, res){
             ok: true,
             distribucion: distribucionBD
         });
+    });
+});
+
+app.put('/distribucion/:id', function (req, res) {
+
+    let id = req.params.id;
+    let body = req.body;
+
+    Distribucion.findByIdAndUpdate(id, body, {
+        new: true,
+        runValidators: true,
+        context: 'query'
+    }, (err, distribucionBD) => {
+        if (err) {
+            return res.status(400).json({
+                ok: false,
+                err
+            });
+        };
+
+        res.json({
+            ok: true,
+            distribucion: distribucionBD
+        });
+
+    });
+
+});
+
+app.delete('/distribucion/:id', function (req, res) {
+
+    let id = req.params.id;
+
+    //findOneAndRemove 
+    // No funcionaba porque este encuentra uno y lo elimina al parecer el primero
+    // se podia ocupar pero cambiando One por ById
+    Distribucion.findByIdAndDelete(id, (err, distribucionBorrada) => {
+        if (err) {
+            return res.status(400).json({
+                ok: false,
+                err
+            });
+        };
+
+        res.json({
+            ok: true,
+            logistica: distribucionBorrada
+        });
+
     });
 });
 
