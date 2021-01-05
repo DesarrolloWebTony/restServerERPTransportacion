@@ -42,6 +42,30 @@ app.get('/distribuciones', function (req, res) {
         });
 });
 
+// express o convencional
+
+app.get('/tiposEntrega', function(req, res){
+    Distribucion.aggregate([
+        {
+            $group:{ _id:"$express", numero:{$sum:1} }
+        }
+    
+    ]).exec((err, tipos)=>{
+        if(err){
+            res.status(400).json({
+                ok: false,
+                err
+            });
+        }
+        res.json({
+            ok: true,
+            tipos
+        });
+    })
+});
+
+
+
 app.post('/distribucion', function(req, res){
     
     let body = req.body;

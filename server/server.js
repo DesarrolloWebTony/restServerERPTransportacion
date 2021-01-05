@@ -1,3 +1,7 @@
+// import { OpenStreetMapProvider } from 'leaflet-geosearch';
+
+// const geo = require('leaflet-geosearch');
+
 const express = require('express');
 const app = express();
 
@@ -53,5 +57,12 @@ db.once('open', function() {
 
 
 app.listen(3000,()=>{
-    console.log('usando puerto 3000')
+    console.log('usando puerto 3000');
+
+    // const provider = new OpenStreetMapProvider();
+    // // const results = await provider.search({ query: input.value });
+    // provider.search({ query: 'San Andrés Chiautla, State of Mexico' }).then(function (result) {
+    //     console.log(result);
+    // });
+    
 });
