@@ -36,7 +36,7 @@ app.use(require('./routes/contenedor'));
 app.use(require('./routes/logistica'));
 app.use(require('./routes/devolucion'));
 app.use(require('./routes/distribucion'));
-
+app.use(require('./routes/solicitudProveedor'));
 
 // ===================================================
 //              MONGOOSE CONNECTION

@@ -96,7 +96,7 @@ app.get('/almacenesSolicitados', function (req, res) {
         });
 });
 
-//productos almacenados
+//productos almacenados por categoria
 
 app.get('/productosAlmacenados', function (req, res) {
 
@@ -123,6 +123,7 @@ app.get('/productosAlmacenados', function (req, res) {
 
     });
 });
+
 
 app.post('/almacen', function (req, res) {
     //obteniendo la informacion del POST
